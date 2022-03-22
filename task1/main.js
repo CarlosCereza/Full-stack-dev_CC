@@ -8,22 +8,19 @@ function init()
     {
         doMagic();
         let x = document.querySelector("div[data-test-id=header-tab][aria-selected='true']").parentNode.parentNode;
-        console.log(x);
         var observer = new MutationObserver( entries =>
         {
             setTimeout(1000);
             doMagic();
-            console.log(entries);
         });
         observer.observe(x, { childList:true, subtree:true });
     }
 
     function doMagic()
     {
-        //console.clear();
+        console.clear();
         var ticketID = fetchTicketID(window.location.href);
         var allConversationsInfo = JSON.parse(httpGet("https://nordvpn.zendesk.com/api/lotus/tickets/" + ticketID + "/conversations.json?include=users"));
-        console.log(allConversationsInfo);
         var userID = getUserID(allConversationsInfo.users);
         var numberOfPublicReplies = countPublicReplies(allConversationsInfo, userID);
         //-----------------------------------------------------
